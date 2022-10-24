@@ -1,5 +1,6 @@
 # ai-cars-and-tanks
-From blog posting on https://aimlfun.com/can-anyone-drive-a-car-and-a-tank/
+
+From blog posting: https://aimlfun.com/can-anyone-drive-a-car-and-a-tank/
 
 This application requires .net6 and Visual Studio 2022 (Community works).
 
