@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="UX\Controls\FluentSlider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="UX\Controls\RoundedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="UX\Controls\UserControlLoadTrackItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UX\Forms\Settings\FormAIModelConfigure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UX\Forms\Settings\FormConfigureVision.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UX\Forms\Settings\FormLoadTracks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UX\Forms\Settings\FormSaveTracks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UX\Forms\Settings\FormConfigureWorld.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UX\Forms\MainUI\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="UX\Forms\MainUI\FormMain.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
