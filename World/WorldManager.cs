@@ -1,10 +1,13 @@
 ﻿#define plain_grass
-using AICarTrack;
-using AICarTrack.Settings;
+using CarsAndTanks.Learn;
 using CarsAndTanks.Settings;
+using CarsAndTanks.Utilities;
+using CarsAndTanks.UX.Forms.MainUI;
+using CarsAndTanks.UX.MoveablePanels;
+using CarsAndTanks.World.Car;
+using CarsAndTanks.World.UX.Track;
 using System.Drawing.Drawing2D;
 using System.Text;
-using UX.MoveablePanels;
 
 namespace CarsAndTanks.World;
 

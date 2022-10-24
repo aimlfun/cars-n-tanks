@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text;
-using AICarTrack;
-using AICarTrack.World.UX.Track;
+using CarsAndTanks.Learn;
+using CarsAndTanks.Utilities;
 
 namespace CarsAndTanks.World.UX.Track;
 

@@ -1,8 +1,9 @@
-﻿using AICarTrack;
-using AICarTrack.World.UX.Dials;
+﻿using CarsAndTanks.Learn;
 using CarsAndTanks.Settings;
+using CarsAndTanks.World.Car;
+using CarsAndTanks.World.UX.Dials;
 
-namespace UX.MoveablePanels;
+namespace CarsAndTanks.UX.MoveablePanels;
 
 /// <summary>
 /// Used for the "speedo" panel. It differs in that this specific one shows a digital and analogue speedo.

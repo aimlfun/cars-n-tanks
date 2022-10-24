@@ -1,4 +1,6 @@
-﻿namespace AICarTrack.World.UX.Dials
+﻿using CarsAndTanks.Utilities;
+
+namespace CarsAndTanks.World.UX.Dials
 {
     /// <summary>
     /// Implementation of a speedometer, that is comprised of a face (part of a static image) and a needle.
@@ -241,10 +243,10 @@
             const int maxNeedleDeflectionAllowed = 1;
 
             // damp the needle, by only allowing it to move by a limited amount. It will always eventually reach the speed unless the speed reduces.
-            lastSpeedDialIndicates = MathUtils.Clamp(speed, lastSpeedDialIndicates - maxNeedleDeflectionAllowed, lastSpeedDialIndicates + maxNeedleDeflectionAllowed);
+            lastSpeedDialIndicates = speed.Clamp(lastSpeedDialIndicates - maxNeedleDeflectionAllowed, lastSpeedDialIndicates + maxNeedleDeflectionAllowed);
 
             // the range is 0..140 spread over 270 degrees, starting at (c_needleStartDegrees approx 137 degrees)
-            double angle = c_needleStartDegrees + (lastSpeedDialIndicates / 140 * (c_needleSweepDegrees - 5));
+            double angle = c_needleStartDegrees + lastSpeedDialIndicates / 140 * (c_needleSweepDegrees - 5);
 
             if (angle < 0) angle += 360;
             if (angle > 360) angle -= 360;

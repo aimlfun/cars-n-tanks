@@ -1,52 +1,51 @@
-﻿namespace AICarTrack.UX.Controls
+﻿namespace CarsAndTanks.UX.Controls;
+
+public partial class UserControlLoadTrackItem : UserControl
 {
-    public partial class UserControlLoadTrackItem : UserControl
+    public delegate void CallbackSelect(string filename);
+
+    readonly private CallbackSelect? callbackWhenTrackSelected;
+
+    readonly private Control c;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="trackFilename"></param>
+    /// <exception cref="ArgumentException"></exception>
+    public UserControlLoadTrackItem(string trackFilename, CallbackSelect callback)
     {
-        public delegate void CallbackSelect(string filename);
+        InitializeComponent();
 
-        readonly private CallbackSelect? callbackWhenTrackSelected;
+        callbackWhenTrackSelected = callback;
 
-        readonly private Control c;
+        if (!File.Exists(trackFilename)) throw new ArgumentException(nameof(trackFilename) + " track doesn't exist");
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="trackFilename"></param>
-        /// <exception cref="ArgumentException"></exception>
-        public UserControlLoadTrackItem(string trackFilename, CallbackSelect callback)
-        {
-            InitializeComponent();
+        labelTrackName.Text = Path.GetFileNameWithoutExtension(trackFilename);
+        string imageFileName = Path.ChangeExtension(trackFilename, ".png");
 
-            callbackWhenTrackSelected = callback;
+        if (File.Exists(imageFileName)) pictureBoxTrack.Image = new Bitmap(imageFileName);
 
-            if (!File.Exists(trackFilename)) throw new ArgumentException(nameof(trackFilename) + " track doesn't exist");
+        c = this;
+        c.Tag = trackFilename;
+        pictureBoxTrack.Click += Track_Click;
+        labelTrackName.Click += Track_Click;
+        roundedPanel1.Click += Track_Click;
+    }
 
-            labelTrackName.Text = Path.GetFileNameWithoutExtension(trackFilename);
-            string imageFileName = Path.ChangeExtension(trackFilename, ".png");
-
-            if (File.Exists(imageFileName)) pictureBoxTrack.Image = new Bitmap(imageFileName);
-
-            c = this;
-            c.Tag = trackFilename;
-            pictureBoxTrack.Click += Track_Click;
-            labelTrackName.Click += Track_Click;
-            roundedPanel1.Click += Track_Click;
-        }
-
-        private void Track_Click(object? sender, EventArgs e)
-        {
-            callbackWhenTrackSelected?.Invoke((string)c.Tag);
-        }
+    private void Track_Click(object? sender, EventArgs e)
+    {
+        callbackWhenTrackSelected?.Invoke((string)c.Tag);
+    }
 
 
-        private void RoundedPanel1_MouseEnter(object sender, EventArgs e)
-        {
-            this.roundedPanel1.PanelBorderColor = Color.Black;
-        }
+    private void RoundedPanel1_MouseEnter(object sender, EventArgs e)
+    {
+        roundedPanel1.PanelBorderColor = Color.Black;
+    }
 
-        private void RoundedPanel1_MouseLeave(object sender, EventArgs e)
-        {
-            this.roundedPanel1.PanelBorderColor = Color.FromArgb(204, 204, 204);
-        }
+    private void RoundedPanel1_MouseLeave(object sender, EventArgs e)
+    {
+        roundedPanel1.PanelBorderColor = Color.FromArgb(204, 204, 204);
     }
 }

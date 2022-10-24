@@ -1,8 +1,10 @@
-﻿using AICarTrack;
-using AICarTrack.Vision.UX;
+﻿using CarsAndTanks.Learn;
+using CarsAndTanks.AI;
 using CarsAndTanks.Settings;
+using CarsAndTanks.World.Car;
+using CarsAndTanks.Vision.UX;
 
-namespace UX.MoveablePanels;
+namespace CarsAndTanks.UX.MoveablePanels;
 
 /// <summary>
 /// Used for the "vision" panel. It differs in that this specific one invokes the vision "visualiser".

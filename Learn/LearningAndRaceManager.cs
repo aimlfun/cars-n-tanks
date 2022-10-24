@@ -1,9 +1,15 @@
-﻿using AICarTrack.World.Telemetry;
+﻿using CarsAndTanks.AI;
 using CarsAndTanks.Settings;
+using CarsAndTanks.Utilities;
+using CarsAndTanks.UX.Forms.MainUI;
+using CarsAndTanks.World.Car;
+using CarsAndTanks.World.Telemetry;
+using CarsAndTanks.World.UX.Track;
+using Microsoft.VisualBasic.Devices;
 using System.Drawing.Imaging;
 using System.Text;
 
-namespace AICarTrack
+namespace CarsAndTanks.Learn
 {
     /// <summary>
     /// Responsible for starting learning and races, from creation of the NN assigned to a car to asking cars to move around the track
@@ -245,10 +251,11 @@ namespace AICarTrack
             s_movesToCountBetweenEachMutation = Config.s_settings.AI.CarMovesBeforeFirstMutation;
             s_movesLeftBeforeNextMutation = s_movesToCountBetweenEachMutation;
             s_currentBestCarId = -1;
-            s_lastLapBestCarId = (VehicleDrivenByAI.c_hardCodedBrain) ? 0 : -1;
+            s_lastLapBestCarId = VehicleDrivenByAI.c_hardCodedBrain ? 0 : -1;
             s_telemetryOfBestCarAfterLaps.Clear();
             s_telemetryPerCar.Clear();
             s_learningInProgress = true;
+            s_quietLearn = false;
 
             // start the timer that moves the cars.
             InitialiseAndStartMoveTimer();
@@ -297,7 +304,7 @@ namespace AICarTrack
             s_currentBestCarId = -1;
 
             s_timerForCarMove.Stop();
-            
+
             if (!s_learningInProgress) return; // no need to stop
 
             s_learningInProgress = false;
@@ -311,7 +318,7 @@ namespace AICarTrack
             s_movesLeftBeforeNextMutation = s_movesToCountBetweenEachMutation;
 
             // race mode car should NOT crash, if it does, learning should commence
-            
+
             InitialiseCars();
         }
 
@@ -325,14 +332,14 @@ namespace AICarTrack
         /// </summary>
         private static void TimeToMutate()
         {
-            if (!s_learningInProgress ) return; // mutation only happens during learning
-
+            if (!s_learningInProgress) return; // mutation only happens during learning
+      
             s_currentBestCarId = -1; // no car selected
 
             int pos = DetermineBestCarAndEliminateThoseMovingBackwards();
 
             // enable each mutation to have longer to run, so the cars go further.
-            s_movesToCountBetweenEachMutation = (int)(s_movesToCountBetweenEachMutation * (100 + Config.s_settings.AI.PercentageIncreaseBetweenMutations) / 100);
+            if(s_movesLeftBeforeNextMutation==0) s_movesToCountBetweenEachMutation = s_movesToCountBetweenEachMutation * (100 + Config.s_settings.AI.PercentageIncreaseBetweenMutations) / 100;
 
             s_movesLeftBeforeNextMutation = s_movesToCountBetweenEachMutation;
 
@@ -408,6 +415,15 @@ namespace AICarTrack
         /// </summary>
         internal static void InitialiseCars()
         {
+            // there are lots of cool things I could have done, this the minimum. I might add a graph at some point.
+            if (SilentLearning)
+            {
+                // every mutation, paint the screen. It slows down learning a tiny bit, but the user can see 
+                // it's doing something. The telemetry (if on) appears and updates. The counter too.
+                FormMain.s_trackCanvas?.UpdateProgress(); // track is drawn, with cars overlaid
+                Application.DoEvents(); // in quiet mode, it's not painting, so let's make sure we do once per generation
+            }
+
             s_generation++;
 
             NumberOfMovesMadeByCars = 0;
@@ -422,7 +438,7 @@ namespace AICarTrack
 
             // create cars with their respective brain attached (create is simpler than resetting)
             // race mode is ONE car
-            for (int i = 0; i <  Config.s_settings.AI.NumberOfAICarsToCreate; i++)
+            for (int i = 0; i < Config.s_settings.AI.NumberOfAICarsToCreate; i++)
             {
                 s_cars.Add(i, new(i));
             }
@@ -442,7 +458,7 @@ namespace AICarTrack
             List<PointF> points2 = new();
 
             int RoadWidth = Config.s_settings.World.RoadWidthInPixels;
-            int RoadWidthMargin = (RoadWidth * 20) / 35;
+            int RoadWidthMargin = RoadWidth * 20 / 35;
 
             // road segments are a list of lines
             for (int i = 1; i < s_trackSegments.Count; i++)
@@ -476,7 +492,7 @@ namespace AICarTrack
                 double dx = x / gatesRequiredForLengthOfLine;
                 double dy = y / gatesRequiredForLengthOfLine;
 
-                double angle = (dy == 0) ? 0 : Math.Asin(x / distanceBetweenPoints);
+                double angle = dy == 0 ? 0 : Math.Asin(x / distanceBetweenPoints);
 
                 angle -= Math.PI / 2;
 
@@ -516,8 +532,8 @@ namespace AICarTrack
                     double dy1 = Math.Sin(angle) * ydirection * (RoadWidth / 2); // aqua
 
                     // create a point on the line
-                    double x1 = (start.X + z * dx) + dx1;
-                    double y1 = (start.Y + z * dy) + dy1;
+                    double x1 = start.X + z * dx + dx1;
+                    double y1 = start.Y + z * dy + dy1;
 
                     if (Math.Sqrt((x1 - start.X) * (x1 - start.X) + (y1 - start.Y) * (y1 - start.Y)) < RoadWidthMargin) continue; // if too close to the intersection, don't add a gate
                     if (Math.Sqrt((x1 - end.X) * (x1 - end.X) + (y1 - end.Y) * (y1 - end.Y)) < RoadWidthMargin) continue; // if too close to the intersection, don't add a gate
@@ -525,8 +541,8 @@ namespace AICarTrack
                     double dx2 = Math.Cos(Math.PI + angle) * xdirection * (RoadWidth / 2);
                     double dy2 = Math.Sin(Math.PI + angle) * ydirection * (RoadWidth / 2);
 
-                    double x2 = (start.X + z * dx) + dx2;
-                    double y2 = (start.Y + z * dy) + dy2;
+                    double x2 = start.X + z * dx + dx2;
+                    double y2 = start.Y + z * dy + dy2;
 
                     if (Math.Sqrt((x2 - start.X) * (x2 - start.X) + (y2 - start.Y) * (y2 - start.Y)) < RoadWidthMargin) continue; // if too close to the intersection, don't add a gate
                     if (Math.Sqrt((x2 - end.X) * (x2 - end.X) + (y2 - end.Y) * (y2 - end.Y)) < RoadWidthMargin) continue; // if too close to the intersection, don't add a gate
@@ -573,7 +589,7 @@ namespace AICarTrack
 
             // if we loaded the network, we're generation zero. We don't track what generation is was saved as.
             s_generation = 0;
-            
+
             return loadedSomething;
         }
 
@@ -615,7 +631,7 @@ namespace AICarTrack
             {
                 // replace all but top car with a mutated version of the best car
                 // mutation chance and strength is halved.
-                int NumberToPreserve = ((int)(4 + s_generation / 500 - 4) > Config.s_settings.AI.NumberOfAICarsToCreate) ? Config.s_settings.AI.NumberOfAICarsToCreate - 2 : (int)(4 + (s_generation / 500F));
+                int NumberToPreserve = (int)(4 + s_generation / 500 - 4) > Config.s_settings.AI.NumberOfAICarsToCreate ? Config.s_settings.AI.NumberOfAICarsToCreate - 2 : (int)(4 + s_generation / 500F);
 
                 int offset = 0;
                 // replace all but top rocket with a mutated version of the best rocket
@@ -630,7 +646,7 @@ namespace AICarTrack
                     offset++;
                     if (offset >= NumberToPreserve) offset = 0;
 
-                    array[worstNeuralNetworkIndex].Mutate(1, 0.1F * 20 * 1 / ((float)s_generation / 500)); // mutate
+                    array[worstNeuralNetworkIndex].Mutate(1, 0.1F * 20 * 1 / (s_generation / 500)); // mutate
                 }
 
             }
@@ -677,7 +693,7 @@ namespace AICarTrack
                 // if this is violated it is referencing an id that doesn't exist.           
                 if (s_lastLapBestCarId > -1 && s_lastLapBestCarId < NeuralNetwork.s_networks.Count) NeuralNetwork.s_networks[s_lastLapBestCarId].Visualise(); // updates the visualiser
 
-                if (!LearningAndRaceManager.SilentLearning) FormMain.s_trackCanvas?.ForceRepaintOfTrackAndCars(); // track is drawn, with cars overlaid
+                if (!SilentLearning) FormMain.s_trackCanvas?.ForceRepaintOfTrackAndCars(); // track is drawn, with cars overlaid
 
                 // has this car gone around the lap twice, if so switch to "optimised" mode (clone top car)
                 if (lappedTwice && s_learningRaceMode == LearningRaceMode.random50pct)
@@ -686,10 +702,13 @@ namespace AICarTrack
                     s_movesToCountBetweenEachMutation = NumberOfMovesMadeByCars + 2; // keeps it real
                 }
 
-                if (allCarsHaveBeenEliminated) NotifyAllCrashed(); // all cars have collided, we can't continue, so we force a mutate
+                if (allCarsHaveBeenEliminated)
+                {
+                    NotifyAllCrashed(); // all cars have collided, we can't continue, so we force a mutate
+                }
 
                 // is it time to mutate?
-                if ((lappedTwice) || (!s_stopMutation && --s_movesLeftBeforeNextMutation < 1))
+                if (lappedTwice || !s_stopMutation && --s_movesLeftBeforeNextMutation < 1)
                 {
                     TelemetryOfBestCarAfterLaps = s_currentBestCarId < 0 || !s_telemetryPerCar.ContainsKey(s_currentBestCarId) ? s_telemetryOfBestCarAfterLaps : s_telemetryPerCar[s_currentBestCarId];
                     TimeToMutate();
@@ -707,7 +726,7 @@ namespace AICarTrack
         private static void MoveAllCars(ref bool allCarsHaveBeenEliminated, ref int maxGate, out bool lappedTwice)
         {
             const bool c_moveCarsInParallel = true;
-            
+
             lappedTwice = false;
 
             if (c_moveCarsInParallel)
@@ -729,7 +748,7 @@ namespace AICarTrack
 
             // after parallelism, we need to do this to determine best car etc.
             foreach (VehicleDrivenByAI car in s_cars.Values)
-            {            
+            {
                 if (car.HasBeenEliminated) continue;
 
                 if (car.HasLapped)

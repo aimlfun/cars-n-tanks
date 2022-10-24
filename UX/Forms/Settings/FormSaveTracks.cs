@@ -1,4 +1,4 @@
-﻿using AICarTrack;
+﻿using CarsAndTanks.Learn;
 
 namespace CarsAndTanks.UX.Forms.Settings
 {

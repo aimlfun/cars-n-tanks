@@ -1,8 +1,5 @@
 ﻿using System.Reflection;
 using System.Text;
-using AICarTrack;
-using AICarTrack.Settings;
-
 namespace CarsAndTanks.Settings;
 
 /// <summary>

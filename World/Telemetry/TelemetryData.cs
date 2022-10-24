@@ -1,4 +1,6 @@
-﻿namespace AICarTrack.World.Telemetry
+﻿using CarsAndTanks.World.Car;
+
+namespace CarsAndTanks.World.Telemetry
 {
     /// <summary>
     /// Physics data that controls why the car behaved that way.

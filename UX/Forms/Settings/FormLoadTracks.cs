@@ -1,5 +1,4 @@
-﻿using AICarTrack;
-using AICarTrack.UX.Controls;
+﻿using CarsAndTanks.UX.Controls;
 
 namespace CarsAndTanks.UX.Forms.Settings
 {

@@ -1,6 +1,9 @@
-﻿using CarsAndTanks.Settings;
+﻿using CarsAndTanks.AI;
+using CarsAndTanks.AI.UX.Dials;
+using CarsAndTanks.Settings;
+using CarsAndTanks.Utilities;
 
-namespace AICarTrack.Vision.UX
+namespace CarsAndTanks.Vision.UX
 {
     internal static class VisionVisualiser
     {

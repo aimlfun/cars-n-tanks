@@ -1,6 +1,6 @@
 ﻿using CarsAndTanks.Settings;
 
-namespace UX.MoveablePanels;
+namespace CarsAndTanks.UX.MoveablePanels;
 
 /// <summary>
 /// Used for the "ranking" panel. It differs in that this specific one write the rankings (gates etc).

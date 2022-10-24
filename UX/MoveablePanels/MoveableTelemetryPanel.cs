@@ -1,10 +1,9 @@
-﻿using AICarTrack;
-using AICarTrack.Settings;
-using AICarTrack.World;
-using AICarTrack.World.UX.VehicleRenderers;
+﻿using CarsAndTanks.Learn;
 using CarsAndTanks.Settings;
+using CarsAndTanks.World.Car;
+using CarsAndTanks.World.UX.VehicleRenderers;
 
-namespace UX.MoveablePanels;
+namespace CarsAndTanks.UX.MoveablePanels;
 
 /// <summary>
 /// Used for the "telemetry" panel. It differs in that this specific one invokes the "telemetry" visualisation.

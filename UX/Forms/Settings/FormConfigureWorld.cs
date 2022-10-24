@@ -1,9 +1,9 @@
-﻿using AICarTrack.Settings;
-using AICarTrack.World.UX.Track;
-using CarsAndTanks.Settings;
+﻿using CarsAndTanks.Settings;
 using CarsAndTanks.World;
+using CarsAndTanks.World.Car;
+using CarsAndTanks.World.UX.Track;
 
-namespace AICarTrack;
+namespace CarsAndTanks.UX.Forms.Settings;
 
 /// <summary>
 /// Displays the world settings and allows user to change them.

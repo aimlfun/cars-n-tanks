@@ -1,8 +1,10 @@
-﻿using AICarTrack;
-using AICarTrack.Settings;
-using AICarTrack.World;
-using AICarTrack.World.Telemetry;
+﻿using CarsAndTanks.Learn;
+using CarsAndTanks.AI;
 using CarsAndTanks.Settings;
+using CarsAndTanks.World.Telemetry;
+using CarsAndTanks.World.UX.VehicleRenderers;
+
+namespace CarsAndTanks.World.Car;
 
 /// <summary>
 /// Magic AI driven vehicle.
@@ -127,6 +129,10 @@ internal class VehicleDrivenByAI
     /// Determines how to paint and hit-detect.
     /// </summary>
     internal VehicleRendererBase Renderer;
+
+    /// <summary>
+    /// true - car has lapped at least once.
+    /// </summary>
     internal bool HasLapped;
 
     /// <summary>
@@ -249,13 +255,13 @@ internal class VehicleDrivenByAI
             // visionSensor[0] = lidar 45 degrees top-right, distance
 
             /* steering */
-            outputFromNeuralNetwork[0] = Math.Tanh((0.20730000291951 * Math.Tanh((0.008449995890259743 * visionSensor[0]) - 0.4309000142675359)) +
-                                                     (-0.5545999999158084 * Math.Tanh((-0.6085499841719866 * visionSensor[0]) + +0.10859999456442893))
+            outputFromNeuralNetwork[0] = Math.Tanh(0.20730000291951 * Math.Tanh(0.008449995890259743 * visionSensor[0] - 0.4309000142675359) +
+                                                     -0.5545999999158084 * Math.Tanh(-0.6085499841719866 * visionSensor[0] + +0.10859999456442893)
                                                      - 0.026499994099140167);
 
             /* speed */
-            outputFromNeuralNetwork[1] = Math.Tanh((0.11979999393224716 * Math.Tanh((0.008449995890259743 * visionSensor[0]) - 0.4309000142675359)) +
-                                                    (0.01675000146497041 * Math.Tanh((-0.6085499841719866 * visionSensor[0]) + 0.10859999456442893))
+            outputFromNeuralNetwork[1] = Math.Tanh(0.11979999393224716 * Math.Tanh(0.008449995890259743 * visionSensor[0] - 0.4309000142675359) +
+                                                    0.01675000146497041 * Math.Tanh(-0.6085499841719866 * visionSensor[0] + 0.10859999456442893)
                                                     + 0.05970000018351129);
         }
 
@@ -278,24 +284,4 @@ internal class VehicleDrivenByAI
         // The more gates it goes through the better car. However we want to encourage the minimum moves because that equates to quicker.
         NeuralNetwork.s_networks[id].Fitness = CurrentGate * 10000 - LearningAndRaceManager.NumberOfMovesMadeByCars; // the further around, the more gates i.e. better AI
     }
-
-    /// <summary>
-    /// Copies the important parts from the car we've copied (like location/gate).
-    /// </summary>
-    /// <param name="breedwith"></param>
-    internal void Reset(int breedwith)
-    {
-        hasBeenEliminated = false;
-        TelemetryData = new(LearningAndRaceManager.s_cars[breedwith].TelemetryData);
-
-        reasonCarWasEliminated = EliminationReasons.notEliminated;
-
-        CurrentGate = LearningAndRaceManager.s_cars[breedwith].CurrentGate;
-        LastGatePassed = LearningAndRaceManager.s_cars[breedwith].LastGatePassed;
-
-        CarImplementation.LocationOnTrack = LearningAndRaceManager.s_cars[breedwith].CarImplementation.LocationOnTrack;
-        CarImplementation.Speed = LearningAndRaceManager.s_cars[breedwith].CarImplementation.Speed;
-        CarImplementation.AngleVehicleIsPointingInDegrees = LearningAndRaceManager.s_cars[breedwith].CarImplementation.AngleVehicleIsPointingInDegrees;
-        lap = LearningAndRaceManager.s_cars[breedwith].lap;
-    }
-}
+   }

@@ -1,4 +1,4 @@
-﻿namespace UX.MoveablePanels;
+﻿namespace CarsAndTanks.UX.MoveablePanels;
 
 /// <summary>
 /// A UI class that provides an alpha overlay over a region, that is draggable via the mouse and capable
@@ -52,7 +52,7 @@ internal class MoveableSemiTransparentPanel
     internal virtual void Draw(Graphics g)
     {
         if (!Visible) return;
-        
+
         // expectation is that this is called after everything is painted (i.e. it is transparent on top)
         g.FillRectangle(new SolidBrush(Color.FromArgb(20, 255, 255, 255)), Location.X, Location.Y, PanelSize.Width, PanelSize.Height);
     }

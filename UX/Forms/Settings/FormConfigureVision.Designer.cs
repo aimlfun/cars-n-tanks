@@ -33,7 +33,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.sliderDepth = new AICarTrack.FluentSlider();
+            this.sliderDepth = new CarsAndTanks.UX.Controls.FluentSlider();
             this.numericUpDownSamplePoints = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownFieldOfVisionStopInDegrees = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownFieldOfVisionStartInDegrees = new System.Windows.Forms.NumericUpDown();
@@ -97,7 +97,7 @@
             this.sliderDepth.BarPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(94)))), ((int)(((byte)(110)))));
             this.sliderDepth.BarPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(74)))));
             this.sliderDepth.BorderRoundRectSize = new System.Drawing.Size(8, 8);
-            this.sliderDepth.ColorSchema = AICarTrack.FluentSlider.ColorSchemas.GreenColors;
+            this.sliderDepth.ColorSchema = CarsAndTanks.UX.Controls.FluentSlider.ColorSchemas.GreenColors;
             this.sliderDepth.Cursor = System.Windows.Forms.Cursors.Hand;
             this.sliderDepth.ElapsedInnerColor = System.Drawing.SystemColors.ControlDark;
             this.sliderDepth.ElapsedPenColorBottom = System.Drawing.SystemColors.ControlDark;
@@ -289,7 +289,7 @@
         private Label label3;
         private Label label2;
         private Label label1;
-        private AICarTrack.FluentSlider sliderDepth;
+        private CarsAndTanks.UX.Controls.FluentSlider sliderDepth;
         private NumericUpDown numericUpDownSamplePoints;
         private NumericUpDown numericUpDownFieldOfVisionStopInDegrees;
         private NumericUpDown numericUpDownFieldOfVisionStartInDegrees;

@@ -1,7 +1,10 @@
-﻿using AICarTrack;
+﻿using CarsAndTanks.Learn;
+using CarsAndTanks.AI;
+using CarsAndTanks.AI.UX;
 using CarsAndTanks.Settings;
+using CarsAndTanks.World.Car;
 
-namespace UX.MoveablePanels;
+namespace CarsAndTanks.UX.MoveablePanels;
 
 /// <summary>
 /// Used for the "neural network" panel. It differs in that this specific one shows the neurons firing.

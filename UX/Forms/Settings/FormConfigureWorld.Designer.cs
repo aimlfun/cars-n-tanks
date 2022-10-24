@@ -1,4 +1,6 @@
-﻿namespace AICarTrack;
+﻿using CarsAndTanks.UX.Controls;
+
+namespace CarsAndTanks.UX.Forms.Settings;
 
 partial class FormConfigureWorld
 {
@@ -67,13 +69,13 @@ partial class FormConfigureWorld
             this.rbShapeKart = new System.Windows.Forms.RadioButton();
             this.rbShapeBlob = new System.Windows.Forms.RadioButton();
             this.label6 = new System.Windows.Forms.Label();
-            this.sliderGateThreshold = new AICarTrack.FluentSlider();
+            this.sliderGateThreshold = new CarsAndTanks.UX.Controls.FluentSlider();
             this.pictureBoxWorldRepresentation = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.sliderRoadWidth = new AICarTrack.FluentSlider();
+            this.sliderRoadWidth = new CarsAndTanks.UX.Controls.FluentSlider();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.sliderCarSize = new AICarTrack.FluentSlider();
+            this.sliderCarSize = new CarsAndTanks.UX.Controls.FluentSlider();
             this.label2 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -522,7 +524,7 @@ partial class FormConfigureWorld
             this.sliderGateThreshold.BarPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(94)))), ((int)(((byte)(110)))));
             this.sliderGateThreshold.BarPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(74)))));
             this.sliderGateThreshold.BorderRoundRectSize = new System.Drawing.Size(8, 8);
-            this.sliderGateThreshold.ColorSchema = AICarTrack.FluentSlider.ColorSchemas.GreenColors;
+            this.sliderGateThreshold.ColorSchema = CarsAndTanks.UX.Controls.FluentSlider.ColorSchemas.GreenColors;
             this.sliderGateThreshold.Cursor = System.Windows.Forms.Cursors.Hand;
             this.sliderGateThreshold.ElapsedInnerColor = System.Drawing.SystemColors.ControlDark;
             this.sliderGateThreshold.ElapsedPenColorBottom = System.Drawing.SystemColors.ControlDark;
@@ -604,7 +606,7 @@ partial class FormConfigureWorld
             this.sliderRoadWidth.BarPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(94)))), ((int)(((byte)(110)))));
             this.sliderRoadWidth.BarPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(74)))));
             this.sliderRoadWidth.BorderRoundRectSize = new System.Drawing.Size(8, 8);
-            this.sliderRoadWidth.ColorSchema = AICarTrack.FluentSlider.ColorSchemas.GreenColors;
+            this.sliderRoadWidth.ColorSchema = CarsAndTanks.UX.Controls.FluentSlider.ColorSchemas.GreenColors;
             this.sliderRoadWidth.Cursor = System.Windows.Forms.Cursors.Hand;
             this.sliderRoadWidth.ElapsedInnerColor = System.Drawing.SystemColors.ControlDark;
             this.sliderRoadWidth.ElapsedPenColorBottom = System.Drawing.SystemColors.ControlDark;
@@ -686,7 +688,7 @@ partial class FormConfigureWorld
             this.sliderCarSize.BarPenColorBottom = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(94)))), ((int)(((byte)(110)))));
             this.sliderCarSize.BarPenColorTop = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(60)))), ((int)(((byte)(74)))));
             this.sliderCarSize.BorderRoundRectSize = new System.Drawing.Size(8, 8);
-            this.sliderCarSize.ColorSchema = AICarTrack.FluentSlider.ColorSchemas.GreenColors;
+            this.sliderCarSize.ColorSchema = CarsAndTanks.UX.Controls.FluentSlider.ColorSchemas.GreenColors;
             this.sliderCarSize.Cursor = System.Windows.Forms.Cursors.Hand;
             this.sliderCarSize.ElapsedInnerColor = System.Drawing.SystemColors.ControlDark;
             this.sliderCarSize.ElapsedPenColorBottom = System.Drawing.SystemColors.ControlDark;
