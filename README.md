@@ -8,4 +8,4 @@ This application requires .net6 and Visual Studio 2022 (Community works).
 3. Save it where you like - I tend to use c:\repos\ai\{folder-name}, feel free to choose a better folde.r
 4. Open the solution, and enjoy!
 
-Any problems? Post a comment on my blog posting, and I will happily try to assist.
+Any problems? Post a comment on my blog, and I will happily try to assist.
